@@ -1,46 +1,41 @@
 /**
- * Created by Balkishan on 11/6/2017.
+ * Created by Balkishan on 11/22/2017.
  */
 
-const express = require('express');
-const app = express();
+var express = require('express');
+var app = express();
 
-var bodyParser = require('body-parser');
-app.use(bodyParser.json({limit: '5mb'}));
+var http = require('http').Server(app);
+var io = require('socket.io')(http);
 
-rabbitSend = require('./routes/rabbitMq/send.js');
-rabbitReceive = require('./routes/rabbitMq/receive.js');
+var PORT = 3000;
+app.use(express.static('UI'));
 
-myProcess = require('./routes/Processes/childProcess.js');
-
-//var input = {
-//    page:0,
-//    itemsPerPage:10
-//};
-//
-//myProcess.myProcess(input, function (error,result) {
-//    if(error){
-//
-//    }
-//    else{
-//        console.log(result);
-//    }
-//})
-
-myProcess.createNewProcess('kishan');
+/*---------------------------*/
+var publishers = require('./routes/Game/Publishers/playerChangeDirection.js');
+var subscriber = require('./routes/Game/Subscribers/updateGameChangeDirection.js');
 
 app.get('/', function (req, res) {
-    res.write("Got It !");
-    res.end();
+    res.sendFile(__dirname+"/UI/index.html");
 });
 
-app.post('/rabbitmq/send', function (req, res) {
-    rabbitSend.sendDataToQueue(req,res);
+app.get('/publish', function (req, res) {
+
 });
 
-app.post('/rabbitmq/receive', function (req,res) {
-    rabbitReceive.receiveDataFromQueue(req,res);
+app.get('/subscribe', function (req, res) {
+
 });
 
-app.listen(1234);
-console.log("listening at 1234");
+io.on('connection', function (socket) {
+    subscriber.subscribeUpdateGameChangeDirection(socket);
+    socket.on('chat message', function (msg) {
+        console.log('message : %s',msg);
+        publishers.publishPlayerChangeDirection(msg,socket);
+    })
+
+});
+
+http.listen(PORT, function(){
+    console.log('listening on *:%s',PORT);
+});

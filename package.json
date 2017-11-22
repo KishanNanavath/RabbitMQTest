@@ -12,6 +12,7 @@
     "express": "4.13.3",
     "amqplib":"0.5.1",
     "body-parser": "1.14.1",
-    "async":"*"
+    "async":"*",
+    "socket.io":"2.0.4"
   }
 }
