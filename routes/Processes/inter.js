@@ -8,8 +8,8 @@ myCode = require('./myCode.js');
 
 var input = process.argv[2];
 
-console.log(JSON.stringify(input))
+console.log(JSON.stringify(input));
 myCode.myFunc(input, function (error, result) {
     console.log(JSON.stringify(result));
-    //return task_callback(false,result);
-})
+    console.log("unversioned console");
+});
