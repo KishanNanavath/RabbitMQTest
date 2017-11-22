@@ -11,7 +11,6 @@ exports.myFunc = function (input, callback) {
 
     //console.log(input)
     setTimeout(function () {
-        //kishan
         //console.log(input.page*input.itemsPerPage,(input.page+1)*input.itemsPerPage);
         res = res.slice(input.page*input.itemsPerPage,(input.page+1)*input.itemsPerPage);
         return callback(false,res)
