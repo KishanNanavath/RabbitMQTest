@@ -1,0 +1,31 @@
+//
+   Created by Balkishan on 11/24/2017.
+
+doctype html
+html
+    head
+    title = title
+
+    body
+        h1=title
+
+        h3 The connection status is currently:
+        p= connectionStatus
+        p= exchangeStatus
+        p= queueStatus
+
+        form(action='/start-server',method='post')
+            input(type='submit', value='Start the server')
+
+        form(action='/new-exchange',method='post')
+            input(type='submit', value='Establised an Exchange')
+
+        form(action='/new-queue',method='post')
+            input(type='submit', value='Establish a message queue')
+
+
+    if(connectionStatus == 'Connected')
+        h2 CONNECTED
+    if (queueStatus == 'The queue is ready for use!' && exchangeStatus == 'An exchange has been established!')
+        h2 BOOM! SUCCESS!
+        a(href='/message-service') Click here to go to the messaging service!

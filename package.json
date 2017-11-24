@@ -8,12 +8,14 @@
   },
   "author": "",
   "license": "ISC",
-  "dependencies":{
+  "dependencies": {
+    "amqp": "*",
+    "amqplib": "0.5.1",
+    "async": "*",
+    "body-parser": "^1.14.1",
     "express": "4.13.3",
-    "amqplib":"0.5.1",
-    "body-parser": "1.14.1",
-    "async":"*",
-    "socket.io": "2.0.4",
-    "mongodb": "2.2.33"
+    "jade": "^1.11.0",
+    "mongodb": "2.2.33",
+    "socket.io": "2.0.4"
   }
 }
