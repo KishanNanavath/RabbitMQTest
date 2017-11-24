@@ -3,4 +3,6 @@
  */
 
 exports.amqpUrl = 'amqp://localhost';
+exports.ex = 'dirExchanger';
+exports.directEx = 'logsExchanger';
 exports.playerChangeDirectionQueue = 'playerChangeDirection';

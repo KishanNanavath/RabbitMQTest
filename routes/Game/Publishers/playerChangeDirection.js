@@ -8,15 +8,23 @@ var amqp = require('amqplib/callback_api');
 function publishPlayerChangeDirection(dir,socket){
     amqp.connect(constants.amqpUrl, function (error, conn) {
         conn.createChannel(function (error, ch) {
-            var q = constants.playerChangeDirectionQueue;
-
-            ch.assertQueue(q,{durable:false});
-            ch.sendToQueue(q,new Buffer(dir));
-            console.log("[x] Send "+dir);
+            ch.assertExchange(constants.directEx, 'direct', {durable: false});
+            ch.publish(constants.directEx, dir.type, new Buffer(JSON.stringify(dir)), {'content_type': 'application/json'});
+            console.log("[x] Send " + JSON.stringify(dir));
             //conn.close();
             socket.emit('replay','message sent from publisher');
-            setTimeout(function() { conn.close(); }, 500);
-        })
+
+            //var q = constants.playerChangeDirectionQueue;
+            //
+            //ch.assertQueue(q,{durable:false});
+            //ch.sendToQueue(q,new Buffer(dir));
+            //console.log("[x] Send "+dir);
+            ////conn.close();
+            //socket.emit('replay','message sent from publisher');
+        });
+        setTimeout(function () {
+            conn.close();
+        }, 500);
     });
 }
 
